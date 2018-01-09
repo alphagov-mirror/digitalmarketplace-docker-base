@@ -2,6 +2,14 @@
 
 Records breaking changes from major version bumps
 
+## 3.0.0
+
+PR: [#21](https://github.com/alphagov/digitalmarketplace-docker-base/pull/21)
+
+### What changed?
+
+We're now using yarn (see what version [here](https://github.com/alphagov/digitalmarketplace-docker-base/blob/master/base.docker#L6)) instead of bower and npm. Also updates the base image to the current stable distribution of Debian (version 9, codenamed stretch)
+
 ## 2.0.0
 
 PR: [#13](https://github.com/alphagov/digitalmarketplace-docker-base/pull/13)
