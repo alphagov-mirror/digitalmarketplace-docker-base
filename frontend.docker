@@ -7,7 +7,7 @@ ONBUILD RUN pip install --no-cache-dir -r requirements.txt
 
 ONBUILD COPY package.json ${APP_DIR}
 ONBUILD COPY yarn.lock ${APP_DIR}
-ONBUILD RUN yarn install --frozen-lockfile
+ONBUILD RUN yarn install --pure-lockfile
 
 ONBUILD COPY . ${APP_DIR}
 
