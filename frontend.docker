@@ -2,8 +2,9 @@ FROM digitalmarketplace/base
 
 COPY nginx/frontend /etc/nginx/sites-enabled/frontend
 
+ONBUILD RUN python -m venv venv
 ONBUILD COPY requirements.txt ${APP_DIR}
-ONBUILD RUN pip install --no-cache-dir -r requirements.txt
+ONBUILD RUN venv/bin/pip install --no-cache-dir -r requirements.txt
 
 ONBUILD COPY package.json ${APP_DIR}
 ONBUILD COPY yarn.lock ${APP_DIR}
