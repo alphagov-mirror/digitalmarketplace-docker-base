@@ -8,7 +8,7 @@ ENV YARN_VERSION 1.3.2-1
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nginx \
                     libpcre3-dev libpq-dev libffi-dev libxml2-dev libxslt-dev python-setuptools libssl-dev \
-                    gcc make git curl xz-utils python2.7 python-pip apt-transport-https gnupg && \
+                    gcc make git curl xz-utils python2.7 python-pip python-virtualenv apt-transport-https gnupg && \
     curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" && \
     tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
     rm "node-v$NODE_VERSION-linux-x64.tar.xz" && \
