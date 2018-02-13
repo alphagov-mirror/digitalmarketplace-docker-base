@@ -9,25 +9,25 @@ ENV DEP_UWSGI_VERSION 2.0.15
 ENV DEP_AWSCLI_VERSION 1.14.31
 ENV DEP_AWSCLI_CWLOGS_VERSION 1.4.4
 
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends nginx \
+RUN /usr/bin/apt-get update && \
+    /usr/bin/apt-get install -y --no-install-recommends nginx \
                     libpcre3-dev libpq-dev libffi-dev libxml2-dev libxslt-dev python-setuptools libssl-dev \
                     gcc make git curl xz-utils python2.7 python-pip python-virtualenv apt-transport-https gnupg && \
-    curl -SLO "https://nodejs.org/dist/v${DEP_NODE_VERSION}/node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
-    tar -xJf "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
-    rm "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends yarn=${DEP_YARN_VERSION} && \
-    rm -rf /var/lib/apt/lists/* && \
+    /usr/bin/curl -SLO "https://nodejs.org/dist/v${DEP_NODE_VERSION}/node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
+    /bin/tar -xJf "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
+    /bin/rm "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
+    /usr/bin/curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | /usr/bin/apt-key add - && \
+    /bin/echo "deb https://dl.yarnpkg.com/debian/ stable main" | /usr/bin/tee /etc/apt/sources.list.d/yarn.list && \
+    /usr/bin/apt-get update && \
+    /usr/bin/apt-get install -y --no-install-recommends yarn=${DEP_YARN_VERSION} && \
+    /bin/rm -rf /var/lib/apt/lists/* && \
     /usr/bin/python2.7 /usr/bin/pip install supervisor==${DEP_SUPERVISOR_VERSION} && \
     /usr/local/bin/pip3 install --no-cache-dir uwsgi==${DEP_UWSGI_VERSION} awscli==${DEP_AWSCLI_VERSION} awscli-cwlogs==${DEP_AWSCLI_CWLOGS_VERSION} && \
-    aws configure set plugins.cwlogs cwlogs && \
-    mkdir -p ${APP_DIR} && \
-    rm -f /etc/nginx/sites-enabled/* && \
-    mkdir -p /var/log/digitalmarketplace && \
-    chmod 777 /run
+    /usr/local/bin/aws configure set plugins.cwlogs cwlogs && \
+    /bin/mkdir -p ${APP_DIR} && \
+    /bin/rm -f /etc/nginx/sites-enabled/* && \
+    /bin/mkdir -p /var/log/digitalmarketplace && \
+    /bin/chmod 777 /run
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
@@ -39,6 +39,6 @@ COPY awslogs/run.sh /awslogs.sh
 
 WORKDIR ${APP_DIR}
 
-CMD ["supervisord", "--configuration", "/etc/supervisord.conf"]
+CMD ["/usr/local/bin/supervisord", "--configuration", "/etc/supervisord.conf"]
 
 EXPOSE 80
