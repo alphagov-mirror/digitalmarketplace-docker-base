@@ -4,6 +4,10 @@ ENV APP_DIR /app
 
 ENV NODE_VERSION 6.12.2
 ENV YARN_VERSION 1.3.2-1
+ENV SUPERVISOR_VERSION 3.3.3
+ENV UWSGI_VERSION 2.0.15
+ENV AWSCLI_VERSION 1.14.31
+ENV AWSCLI_CWLOGS_VERSION 1.4.4
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nginx \
@@ -17,8 +21,8 @@ RUN apt-get update && \
     apt-get update && \
     apt-get install -y --no-install-recommends yarn=${YARN_VERSION} && \
     rm -rf /var/lib/apt/lists/* && \
-    /usr/bin/python2.7 /usr/bin/pip install supervisor==3.3.3 && \
-    pip install --no-cache-dir uwsgi awscli awscli-cwlogs && \
+    /usr/bin/python2.7 /usr/bin/pip install supervisor==${SUPERVISOR_VERSION} && \
+    /usr/local/bin/pip3 install --no-cache-dir uwsgi==${UWSGI_VERSION} awscli==${AWSCLI_VERSION} awscli-cwlogs==${AWSCLI_CWLOGS_VERSION} && \
     aws configure set plugins.cwlogs cwlogs && \
     mkdir -p ${APP_DIR} && \
     rm -f /etc/nginx/sites-enabled/* && \
