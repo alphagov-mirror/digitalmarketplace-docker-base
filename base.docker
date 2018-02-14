@@ -2,27 +2,27 @@ FROM python:3.6.4-slim-stretch
 
 ENV APP_DIR /app
 
-ENV NODE_VERSION 6.12.2
-ENV YARN_VERSION 1.3.2-1
-ENV SUPERVISOR_VERSION 3.3.3
-ENV UWSGI_VERSION 2.0.15
-ENV AWSCLI_VERSION 1.14.31
-ENV AWSCLI_CWLOGS_VERSION 1.4.4
+ENV DEP_NODE_VERSION 6.12.2
+ENV DEP_YARN_VERSION 1.3.2-1
+ENV DEP_SUPERVISOR_VERSION 3.3.3
+ENV DEP_UWSGI_VERSION 2.0.15
+ENV DEP_AWSCLI_VERSION 1.14.31
+ENV DEP_AWSCLI_CWLOGS_VERSION 1.4.4
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends nginx \
                     libpcre3-dev libpq-dev libffi-dev libxml2-dev libxslt-dev python-setuptools libssl-dev \
                     gcc make git curl xz-utils python2.7 python-pip python-virtualenv apt-transport-https gnupg && \
-    curl -SLO "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" && \
-    tar -xJf "node-v$NODE_VERSION-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
-    rm "node-v$NODE_VERSION-linux-x64.tar.xz" && \
+    curl -SLO "https://nodejs.org/dist/v${DEP_NODE_VERSION}/node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
+    tar -xJf "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
+    rm "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
     curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update && \
-    apt-get install -y --no-install-recommends yarn=${YARN_VERSION} && \
+    apt-get install -y --no-install-recommends yarn=${DEP_YARN_VERSION} && \
     rm -rf /var/lib/apt/lists/* && \
-    /usr/bin/python2.7 /usr/bin/pip install supervisor==${SUPERVISOR_VERSION} && \
-    /usr/local/bin/pip3 install --no-cache-dir uwsgi==${UWSGI_VERSION} awscli==${AWSCLI_VERSION} awscli-cwlogs==${AWSCLI_CWLOGS_VERSION} && \
+    /usr/bin/python2.7 /usr/bin/pip install supervisor==${DEP_SUPERVISOR_VERSION} && \
+    /usr/local/bin/pip3 install --no-cache-dir uwsgi==${DEP_UWSGI_VERSION} awscli==${DEP_AWSCLI_VERSION} awscli-cwlogs==${DEP_AWSCLI_CWLOGS_VERSION} && \
     aws configure set plugins.cwlogs cwlogs && \
     mkdir -p ${APP_DIR} && \
     rm -f /etc/nginx/sites-enabled/* && \
