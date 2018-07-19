@@ -1,5 +1,5 @@
 BUILD_VERSION := $(shell cat VERSION)
-BUILD_DATE := $(shell date '+%Y%m%d')
+BUILD_DATE := $(shell date -u '+%Y%m%d')
 
 .PHONY: build
 build:
