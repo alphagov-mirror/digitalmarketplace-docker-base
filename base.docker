@@ -1,5 +1,8 @@
 FROM python:3.6-slim-stretch
 
+ARG BUILD_DATE
+ARG BUILD_VERSION
+
 ENV APP_DIR /app
 
 ENV DEP_NODE_VERSION 6.12.2
@@ -36,6 +39,9 @@ COPY awslogs/awslogs.conf /etc/awslogs.conf
 
 COPY nginx/run.sh /nginx.sh
 COPY awslogs/run.sh /awslogs.sh
+
+LABEL BUILD_DATE=${BUILD_DATE}
+LABEL BUILD_VERSION=${BUILD_VERSION}
 
 WORKDIR ${APP_DIR}
 

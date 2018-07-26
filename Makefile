@@ -1,10 +1,12 @@
 BUILD_VERSION := $(shell cat VERSION)
-BUILD_DATE := $(shell date -u '+%Y%m%dT%H%M%SZ')
 
 .PHONY: build
 build:
+	$(eval BUILD_DATE := $(shell date -u '+%Y%m%dT%H%M%SZ'))
+	$(eval BUILD_ARGS := --build-arg BUILD_DATE=${BUILD_DATE} --build-arg BUILD_VERSION=${BUILD_VERSION})
+
 	docker pull digitalmarketplace/base
-	docker build --pull --cache-from digitalmarketplace/base -t digitalmarketplace/base -f base.docker .
+	docker build --pull --cache-from digitalmarketplace/base ${BUILD_ARGS} -t digitalmarketplace/base -f base.docker .
 	docker tag digitalmarketplace/base digitalmarketplace/base:${BUILD_VERSION}
 	docker tag digitalmarketplace/base digitalmarketplace/base:${BUILD_VERSION}-${BUILD_DATE}
 
@@ -18,6 +20,8 @@ build:
 
 .PHONY: push
 push:
+	$(eval BUILD_DATE := $(shell docker inspect --format '{{.Config.Labels.BUILD_DATE}}' digitalmarketplace/base))
+
 	docker push digitalmarketplace/base:${BUILD_VERSION}
 	docker push digitalmarketplace/base:${BUILD_VERSION}-${BUILD_DATE}
 	docker push digitalmarketplace/base:latest
