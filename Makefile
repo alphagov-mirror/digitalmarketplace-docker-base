@@ -4,7 +4,7 @@ BUILD_DATE := $(shell date -u '+%Y%m%dT%H%M%SZ')
 .PHONY: build
 build:
 	docker pull digitalmarketplace/base
-	docker build --cache-from digitalmarketplace/base -t digitalmarketplace/base -f base.docker .
+	docker build --pull --cache-from digitalmarketplace/base -t digitalmarketplace/base -f base.docker .
 	docker tag digitalmarketplace/base digitalmarketplace/base:${BUILD_VERSION}
 	docker tag digitalmarketplace/base digitalmarketplace/base:${BUILD_VERSION}-${BUILD_DATE}
 
