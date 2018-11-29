@@ -2,6 +2,14 @@
 
 Records breaking changes from major version bumps
 
+## 4.0.0
+
+PR [#36](https://github.com/alphagov/digitalmarketplace-docker-base/pull/36)
+
+### What changed?
+
+We've updated the base version of Node to 8.12.0, as the previous version (6.12.2) was reaching end of life.
+
 ## 3.0.0
 
 PR: [#21](https://github.com/alphagov/digitalmarketplace-docker-base/pull/21)
