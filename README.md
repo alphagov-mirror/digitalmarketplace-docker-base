@@ -26,3 +26,11 @@ Once you're happy with the result, remember to push them to DockerHub so they ca
     $ make push
   
 It will ask you to log in if you haven't already.
+
+## Debugging containers
+
+Sometimes it's useful to know what's happening inside a container built from an image.
+
+To start a container from an image and get a bash prompt:
+
+    $ docker run -it <image_name>:<image_tag> bash
