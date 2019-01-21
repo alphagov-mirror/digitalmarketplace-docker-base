@@ -12,14 +12,14 @@ DOCKER_FILE="$2"
 
 # create a clean directory for output files
 TMPDIR="$(mktemp -d /tmp/docker-scan.XXX)"
-trap 'rm -r "${TMPDIR}"' EXIT
+trap 'rm -rf "${TMPDIR}"' EXIT
 
 cp "${DOCKER_FILE}" "${TMPDIR}"
 DOCKER_FILE="$(basename ${DOCKER_FILE})"
 
 # get SNYK_TOKEN from credentials repo
 eval "$(${DM_CREDENTIALS_REPO}/sops-wrapper -d ${DM_CREDENTIALS_REPO}/jenkins-vars/snyk_credentials.env)"
-if [ -n SNYK_TOKEN ]; then
+if [ -z "$SNYK_TOKEN" ]; then
 	>&2 echo "Error: sops failed getting SNYK_TOKEN"
 	exit 2
 fi
@@ -42,7 +42,8 @@ docker run --rm \
 STATUS="$?"
 
 if [ -n "${OUTDIR}" ] && [ -d "${OUTDIR}" ]; then
-	(cd "${TMPDIR}" && cp snyk_report.css snyk_report.html snyk-result.json snyk-error.log "${OUTDIR}")
+	echo "Copying report files to ${OUTDIR}"
+	cp "${TMPDIR}/snyk_report.css" "${TMPDIR}/snyk_report.html" "${TMPDIR}/snyk-result.json" "${TMPDIR}/snyk-error.log" "${OUTDIR}"
 fi
 
 if [ $STATUS -eq 1 ]; then
@@ -51,3 +52,5 @@ if [ $STATUS -eq 1 ]; then
 elif [ $STATUS -eq 0 ]; then
 	colorecho "Snyk gave ${DOCKER_REPO} a clean bill of health. You're good to go!"
 fi
+
+exit 0
