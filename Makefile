@@ -33,3 +33,28 @@ push:
 	docker push digitalmarketplace/base-frontend:${BUILD_VERSION}
 	docker push digitalmarketplace/base-frontend:${BUILD_VERSION}-${BUILD_DATE}
 	docker push digitalmarketplace/base-frontend:latest
+
+.PHONY: scan
+scan:
+	$(eval REPORTS := $(shell mktemp -d /tmp/docker-base-scan.XXX))
+	$(eval export MONITOR := 'true')
+
+	${DM_CREDENTIALS_REPO}/sops-wrapper -v > /dev/null
+
+	$(eval export OUTDIR := ${REPORTS}/digitalmarketplace_base_${BUILD_VERSION})
+	@mkdir -p ${OUTDIR}
+	@echo '<p><a href="digitalmarketplace_base_${BUILD_VERSION}">digitalmarketplace/base:${BUILD_VERSION}</a></p>' >> ${REPORTS}/index.html
+	docker pull digitalmarketplace/base:${BUILD_VERSION}
+	./docker-scan.sh digitalmarketplace/base:${BUILD_VERSION} base.docker
+
+	$(eval export OUTDIR := ${REPORTS}/digitalmarketplace_base-api_${BUILD_VERSION})
+	@mkdir -p ${OUTDIR}
+	@echo '<p><a href="digitalmarketplace_base-api_${BUILD_VERSION}">digitalmarketplace/base-api:${BUILD_VERSION}</a></p>' >> ${REPORTS}/index.html
+	docker pull digitalmarketplace/base-api:${BUILD_VERSION}
+	./docker-scan.sh digitalmarketplace/base-api:${BUILD_VERSION} api.docker
+
+	$(eval export OUTDIR := ${REPORTS}/digitalmarketplace_base-frontend_${BUILD_VERSION})
+	@mkdir -p ${OUTDIR}
+	@echo '<p><a href="digitalmarketplace_base-frontend_${BUILD_VERSION}">digitalmarketplace/base-frontend:${BUILD_VERSION}</a></p>' >> ${REPORTS}/index.html
+	docker pull digitalmarketplace/base-frontend:${BUILD_VERSION}
+	./docker-scan.sh digitalmarketplace/base-frontend:${BUILD_VERSION} frontend.docker
