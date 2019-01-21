@@ -43,18 +43,15 @@ scan:
 
 	$(eval OUTDIR := ${REPORTS}/digitalmarketplace_base_${BUILD_VERSION})
 	@mkdir -p ${OUTDIR}
-	@echo '<p><a href="digitalmarketplace_base_${BUILD_VERSION}/snyk_report.html">digitalmarketplace/base:${BUILD_VERSION}</a></p>' >> ${REPORTS}/index.html
 	docker pull digitalmarketplace/base:${BUILD_VERSION}
 	OUTDIR=${OUTDIR} ./docker-scan.sh digitalmarketplace/base:${BUILD_VERSION} base.docker
 
 	$(eval OUTDIR := ${REPORTS}/digitalmarketplace_base-api_${BUILD_VERSION})
 	@mkdir -p ${OUTDIR}
-	@echo '<p><a href="digitalmarketplace_base_api_${BUILD_VERSION}/snyk_report.html">digitalmarketplace/base-api:${BUILD_VERSION}</a></p>' >> ${REPORTS}/index.html
 	docker pull digitalmarketplace/base-api:${BUILD_VERSION}
 	OUTDIR=${OUTDIR} ./docker-scan.sh digitalmarketplace/base-api:${BUILD_VERSION} api.docker
 
 	$(eval OUTDIR := ${REPORTS}/digitalmarketplace_base-frontend_${BUILD_VERSION})
 	@mkdir -p ${OUTDIR}
-	@echo '<p><a href="digitalmarketplace_base-frontend_${BUILD_VERSION}/snyk_report.html">digitalmarketplace/base-frontend:${BUILD_VERSION}</a></p>' >> ${REPORTS}/index.html
 	docker pull digitalmarketplace/base-frontend:${BUILD_VERSION}
 	./docker-scan.sh digitalmarketplace/base-frontend:${BUILD_VERSION} frontend.docker
