@@ -41,17 +41,20 @@ scan:
 
 	${DM_CREDENTIALS_REPO}/sops-wrapper -v > /dev/null
 
-	$(eval OUTDIR := ${REPORTS}/digitalmarketplace_base_${BUILD_VERSION})
-	@mkdir -p ${OUTDIR}
 	docker pull digitalmarketplace/base:${BUILD_VERSION}
-	OUTDIR=${OUTDIR} ./docker-scan.sh digitalmarketplace/base:${BUILD_VERSION} base.docker
+	./docker-scan.sh \
+		-o ${REPORTS}/digitalmarketplace_base_${BUILD_VERSION} \
+		digitalmarketplace/base:${BUILD_VERSION} \
+		base.docker
 
-	$(eval OUTDIR := ${REPORTS}/digitalmarketplace_base-api_${BUILD_VERSION})
-	@mkdir -p ${OUTDIR}
 	docker pull digitalmarketplace/base-api:${BUILD_VERSION}
-	OUTDIR=${OUTDIR} ./docker-scan.sh digitalmarketplace/base-api:${BUILD_VERSION} api.docker
+	./docker-scan.sh \
+		-o ${REPORTS}/digitalmarketplace_base-api_${BUILD_VERSION} \
+		digitalmarketplace/base-api:${BUILD_VERSION} \
+		api.docker
 
-	$(eval OUTDIR := ${REPORTS}/digitalmarketplace_base-frontend_${BUILD_VERSION})
-	@mkdir -p ${OUTDIR}
 	docker pull digitalmarketplace/base-frontend:${BUILD_VERSION}
-	./docker-scan.sh digitalmarketplace/base-frontend:${BUILD_VERSION} frontend.docker
+	./docker-scan.sh \
+		-o ${REPORTS}/digitalmarketplace_base-frontend_${BUILD_VERSION} \
+		digitalmarketplace/base-frontend:${BUILD_VERSION} \
+		frontend.docker
