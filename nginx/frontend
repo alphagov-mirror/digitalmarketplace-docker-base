@@ -5,7 +5,7 @@ server {
         alias /app/app/static/$1;
     }
 
-    location ~ ^(?:/[-a-z/]+)?/(_status|metrics)$ {
+    location ~ ^(?:/[-a-z/]+)?/(_status|_metrics)$ {
         include uwsgi_params;
         uwsgi_pass unix:///run/uwsgi.sock;
     }
