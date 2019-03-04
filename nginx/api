@@ -1,5 +1,9 @@
 server {
+    #listen $PORT;
+    # temporarily hardcode both public and private-serving ports
+    # TODO remove once we've made the switch
     listen 80;
+    listen 8080;
 
     location / {
         include uwsgi_params;
