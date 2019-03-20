@@ -61,14 +61,12 @@ docker run --rm \
 	-e SNYK_TOKEN="${SNYK_TOKEN}" \
 	-v "${TMPDIR}":/project:rw \
 	-v /var/run/docker.sock:/var/run/docker.sock \
-	digitalmarketplace/snyk-cli:docker \
+	snyk/snyk-cli:docker \
 	test \
 	--json \
 	--org="${SNYK_ORG}" \
 	--docker "${DOCKER_REPO}" \
 	--file="${DOCKER_FILE}" \
-	>/dev/null \
-	2>/dev/null \
 ;
 STATUS="$?"
 
