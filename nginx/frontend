@@ -1,5 +1,5 @@
 server {
-    listen $PORT;
+    listen {PORT};
 
     location ~ ^(?:/[-a-z/]+)?/static/(.+)$ {
         alias /app/app/static/$1;
