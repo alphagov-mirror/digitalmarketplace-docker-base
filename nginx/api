@@ -1,5 +1,5 @@
 server {
-    #listen $PORT;
+    #listen {PORT};
     # temporarily hardcode both public and private-serving ports
     # TODO remove once we've made the switch
     listen 80;
