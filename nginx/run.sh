@@ -1,10 +1,18 @@
 #!/bin/sh
 
-[ "${PROXY_AUTH_CREDENTIALS}x" = "x" ] && echo 'envvar $PROXY_AUTH_CREDENTIALS not set' && exit 1
-[ "${DM_APP_NAME}x" = "x" ] && echo 'envvar $DM_APP_NAME not set' && exit 1
-[ "${PORT}x" = "x" ] && echo 'envvar $PORT not set' && exit 1
+if [ "${DM_APP_NAME}x" = "x" ]; then
+ >&2 echo 'envvar DM_APP_NAME not set'
+ exit 2
+fi
+if [ "${PORT}x" = "x" ]; then
+  >&2 echo 'envvar PORT not set'
+  exit 2
+fi
 
-echo "${PROXY_AUTH_CREDENTIALS}" >> /etc/nginx/.htpasswd
+# PROXY_AUTH_CREDENTIALS only set for frontend apps
+if [ ! "${PROXY_AUTH_CREDENTIALS}x" = "x" ]; then
+  echo "${PROXY_AUTH_CREDENTIALS}" >> /etc/nginx/.htpasswd
+fi
 
 sed -i "s/{DM_APP_NAME}/$DM_APP_NAME/g" /etc/nginx/nginx.conf
 [ -f /etc/nginx/sites-enabled/api ] && sed -i "s/{PORT}/$PORT/g" /etc/nginx/sites-enabled/api
