@@ -2,6 +2,10 @@
 
 Records breaking changes from major version bumps
 
+## 6.0.0
+
+Remove yarn, we're now using npm instead
+
 ## 5.0.0
 
 Updated the base version of Node to 10.16.3 (LTS) as the previous version (8.12.0) was reaching end of life.
