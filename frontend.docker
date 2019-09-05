@@ -7,8 +7,8 @@ ONBUILD COPY requirements.txt ${APP_DIR}
 ONBUILD RUN /app/venv/bin/pip3 install --no-cache-dir -r requirements.txt
 
 ONBUILD COPY package.json ${APP_DIR}
-ONBUILD COPY yarn.lock ${APP_DIR}
-ONBUILD RUN yarn install --pure-lockfile
+ONBUILD COPY package-lock.json ${APP_DIR}
+ONBUILD RUN npm ci
 
 ONBUILD COPY . ${APP_DIR}
 
