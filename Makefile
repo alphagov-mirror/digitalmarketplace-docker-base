@@ -24,15 +24,15 @@ push:
 
 	docker push digitalmarketplace/base:${BUILD_VERSION}
 	docker push digitalmarketplace/base:${BUILD_VERSION}-${BUILD_DATE}
-	docker push digitalmarketplace/base:latest
+	if [ -z $$NOT_LATEST ]; then docker push digitalmarketplace/base:latest; fi
 
 	docker push digitalmarketplace/base-api:${BUILD_VERSION}
 	docker push digitalmarketplace/base-api:${BUILD_VERSION}-${BUILD_DATE}
-	docker push digitalmarketplace/base-api:latest
+	if [ -z $$NOT_LATEST ]; then docker push digitalmarketplace/base-api:latest; fi
 
 	docker push digitalmarketplace/base-frontend:${BUILD_VERSION}
 	docker push digitalmarketplace/base-frontend:${BUILD_VERSION}-${BUILD_DATE}
-	docker push digitalmarketplace/base-frontend:latest
+	if [ -z $$NOT_LATEST ]; then docker push digitalmarketplace/base-frontend:latest; fi
 
 .PHONY: scan
 scan:
