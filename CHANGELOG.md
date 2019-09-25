@@ -2,6 +2,12 @@
 
 Records breaking changes from major version bumps
 
+## 7.0.0
+
+Switch base to `python:3.6-slim-buster`. Many underlying package versions will have changed, so it's best to be
+a bit cautious with this bump and check everything's operating correctly. References to `stretch` in downstream
+`Dockerfile`s should be updated to `buster`.
+
 ## 6.0.0
 
 Remove yarn, we're now using npm instead
