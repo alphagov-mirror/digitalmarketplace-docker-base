@@ -4,7 +4,7 @@ server {
     location ~ ^(?:/[-a-z/]+)?/static/(.+)$ {
         alias /app/app/static/$1;
 
-        add_header Cache-Control public;
+        add_header Cache-Control public max-age=3600;
     }
 
     location ~ ^(?:/[-a-z/]+)?/(_status|_metrics)$ {
