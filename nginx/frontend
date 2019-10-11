@@ -3,6 +3,10 @@ server {
 
     location ~ ^(?:/[-a-z/]+)?/static/(.+)$ {
         alias /app/app/static/$1;
+
+        # this is aimed at the user's browser; we have not yet enabled the CDN cache feature
+        # due to complexities around serving our app pages and assets from the same domain
+        add_header Cache-Control 'public, max-age=86400';
     }
 
     location ~ ^(?:/[-a-z/]+)?/(_status|_metrics)$ {
