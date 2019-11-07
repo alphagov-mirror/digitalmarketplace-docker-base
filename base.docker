@@ -8,7 +8,7 @@ ENV APP_DIR /app
 ENV DEP_NODE_VERSION 10.16.3
 ENV DEP_SUPERVISOR_VERSION 4.1.0
 ENV DEP_UWSGI_VERSION 2.0.18
-ENV DEP_AWSCLI_CWLOGS_VERSION 1.4.5
+ENV DEP_AWSCLI_CWLOGS_VERSION 1.4.6
 
 RUN /usr/bin/apt-get update && \
     /usr/bin/apt-get install -y --no-install-recommends nginx gcc curl xz-utils git \
