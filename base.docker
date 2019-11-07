@@ -18,7 +18,8 @@ RUN /usr/bin/apt-get update && \
     /bin/tar -xJf "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
     /bin/rm "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
     /bin/rm -rf /var/lib/apt/lists/* && \
-    /usr/local/bin/pip3 install --no-cache-dir supervisor==${DEP_SUPERVISOR_VERSION} uwsgi==${DEP_UWSGI_VERSION} awscli==${DEP_AWSCLI_VERSION} awscli-cwlogs==${DEP_AWSCLI_CWLOGS_VERSION} && \
+    /usr/local/bin/pip3 install --no-cache-dir supervisor==${DEP_SUPERVISOR_VERSION} uwsgi==${DEP_UWSGI_VERSION} \
+        awscli==${DEP_AWSCLI_VERSION} awscli-cwlogs==${DEP_AWSCLI_CWLOGS_VERSION} && \
     /usr/local/bin/aws configure set plugins.cwlogs cwlogs && \
     /bin/mkdir -p ${APP_DIR} && \
     /bin/rm -f /etc/nginx/sites-enabled/* && \
