@@ -2,6 +2,12 @@
 
 Records breaking changes from major version bumps
 
+## 8.0.0
+
+Upgrade supervisor from v3 to v4 to remove redundant Python2 install. Python2 is no longer installed in these images.
+
+PR: [#65](https://github.com/alphagov/digitalmarketplace-docker-base/pull/65)
+
 ## 7.0.0
 
 Switch base to `python:3.6-slim-buster`. Many underlying package versions will have changed, so it's best to be
