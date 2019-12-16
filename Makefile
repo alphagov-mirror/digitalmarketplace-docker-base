@@ -5,8 +5,11 @@ build:
 	$(eval BUILD_DATE := $(shell date -u '+%Y%m%dT%H%M%SZ'))
 	$(eval BUILD_ARGS := --build-arg BUILD_DATE=${BUILD_DATE} --build-arg BUILD_VERSION=${BUILD_VERSION})
 
-	docker pull digitalmarketplace/base
-	docker build --pull --cache-from digitalmarketplace/base ${BUILD_ARGS} -t digitalmarketplace/base -f base.docker .
+	docker pull digitalmarketplace/python
+	docker build --pull --cache-from digitalmarketplace/python ${BUILD_ARGS} -t digitalmarketplace/python -f python.docker .
+	docker tag digitalmarketplace/python digitalmarketplace/python:${BUILD_VERSION}
+
+	docker build -t digitalmarketplace/base -f base.docker .
 	docker tag digitalmarketplace/base digitalmarketplace/base:${BUILD_VERSION}
 
 	docker build -t digitalmarketplace/base-api -f api.docker .
@@ -35,11 +38,11 @@ scan:
 
 	${DM_CREDENTIALS_REPO}/sops-wrapper -v > /dev/null
 
-	docker pull digitalmarketplace/base:${BUILD_VERSION}
+	docker pull digitalmarketplace/app:${BUILD_VERSION}
 	./docker-scan.sh \
-		-o ${REPORTS}/digitalmarketplace_base_${BUILD_VERSION} \
-		digitalmarketplace/base:${BUILD_VERSION} \
-		base.docker
+		-o ${REPORTS}/digitalmarketplace_app_${BUILD_VERSION} \
+		digitalmarketplace/app:${BUILD_VERSION} \
+		app.docker
 
 	docker pull digitalmarketplace/base-api:${BUILD_VERSION}
 	./docker-scan.sh \

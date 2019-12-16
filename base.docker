@@ -1,9 +1,4 @@
-FROM python:3.6-slim-buster
-
-ARG BUILD_DATE
-ARG BUILD_VERSION
-
-ENV APP_DIR /app
+FROM digitalmarketplace/python
 
 ENV DEP_NODE_VERSION 10.16.3
 ENV DEP_SUPERVISOR_VERSION 4.1.0
@@ -32,11 +27,6 @@ COPY awslogs/awslogs.conf /etc/awslogs.conf
 
 COPY nginx/run.sh /nginx.sh
 COPY awslogs/run.sh /awslogs.sh
-
-LABEL BUILD_DATE=${BUILD_DATE}
-LABEL BUILD_VERSION=${BUILD_VERSION}
-
-WORKDIR ${APP_DIR}
 
 CMD ["/usr/local/bin/supervisord", "--configuration", "/etc/supervisord.conf"]
 
