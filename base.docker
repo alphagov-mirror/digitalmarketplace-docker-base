@@ -1,3 +1,10 @@
+FROM digitalmarketplace/builder AS uwsgi
+
+ENV DEP_UWSGI_VERSION 2.0.18
+
+RUN pip install --no-cache-dir \
+        uwsgi==${DEP_UWSGI_VERSION}
+
 FROM digitalmarketplace/python
 
 ENV DEP_NODE_VERSION 10.16.3
@@ -6,19 +13,21 @@ ENV DEP_UWSGI_VERSION 2.0.18
 ENV DEP_AWSCLI_CWLOGS_VERSION 1.4.6
 
 RUN /usr/bin/apt-get update && \
-    /usr/bin/apt-get install -y --no-install-recommends nginx gcc curl xz-utils git \
-        libpcre3-dev libpq-dev libffi-dev libxml2-dev libxslt-dev libssl-dev zlib1g-dev && \
+    /usr/bin/apt-get install -y --no-install-recommends nginx curl xz-utils git \
+        libpq-dev && \
     /usr/bin/curl -SLO "https://nodejs.org/dist/v${DEP_NODE_VERSION}/node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
     /bin/tar -xJf "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
     /bin/rm "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
     /bin/rm -rf /var/lib/apt/lists/* && \
-    /usr/local/bin/pip3 install --no-cache-dir supervisor==${DEP_SUPERVISOR_VERSION} uwsgi==${DEP_UWSGI_VERSION} \
+    /usr/local/bin/pip3 install --no-cache-dir supervisor==${DEP_SUPERVISOR_VERSION} \
         awscli-cwlogs==${DEP_AWSCLI_CWLOGS_VERSION} && \
     /usr/local/bin/aws configure set plugins.cwlogs cwlogs && \
     /bin/mkdir -p ${APP_DIR} && \
     /bin/rm -f /etc/nginx/sites-enabled/* && \
     /bin/mkdir -p /var/log/digitalmarketplace && \
     /bin/chmod 777 /run
+
+COPY --from=uwsgi /usr/local/bin/uwsgi /usr/local/bin/uwsgi
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
