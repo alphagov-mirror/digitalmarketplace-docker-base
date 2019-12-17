@@ -9,6 +9,9 @@ build:
 	docker build --pull --cache-from digitalmarketplace/python ${BUILD_ARGS} -t digitalmarketplace/python -f python.docker .
 	docker tag digitalmarketplace/python digitalmarketplace/python:${BUILD_VERSION}
 
+	docker build -t digitalmarketplace/builder -f builder.docker .
+	docker tag digitalmarketplace/builder digitalmarketplace/builder:${BUILD_VERSION}
+
 	docker build -t digitalmarketplace/base -f base.docker .
 	docker tag digitalmarketplace/base digitalmarketplace/base:${BUILD_VERSION}
 
