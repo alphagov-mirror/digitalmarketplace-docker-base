@@ -7,30 +7,37 @@ RUN pip install --no-cache-dir \
 
 FROM digitalmarketplace/python
 
-ENV DEP_SUPERVISOR_VERSION 4.1.0
-ENV DEP_UWSGI_VERSION 2.0.18
+RUN apt-get update && apt-get install -y \
+        nginx \
+        --no-install-recommends \
+    && rm -rf /var/lib/apt/lists/* \
+    && rm -f /etc/nginx/sites-enabled/*
+
+COPY nginx/nginx.conf /etc/nginx/nginx.conf
+COPY nginx/run.sh /nginx.sh
+
 ENV DEP_AWSCLI_CWLOGS_VERSION 1.4.6
 
-RUN /usr/bin/apt-get update && \
-    /usr/bin/apt-get install -y --no-install-recommends nginx && \
-    /bin/rm -rf /var/lib/apt/lists/* && \
-    /usr/local/bin/pip3 install --no-cache-dir supervisor==${DEP_SUPERVISOR_VERSION} \
-        awscli-cwlogs==${DEP_AWSCLI_CWLOGS_VERSION} && \
-    /usr/local/bin/aws configure set plugins.cwlogs cwlogs && \
-    /bin/mkdir -p ${APP_DIR} && \
-    /bin/rm -f /etc/nginx/sites-enabled/* && \
-    /bin/mkdir -p /var/log/digitalmarketplace && \
-    /bin/chmod 777 /run
+RUN pip install --no-cache-dir \
+        awscli-cwlogs==${DEP_AWSCLI_CWLOGS_VERSION} \
+    && aws configure set plugins.cwlogs cwlogs \
+    && mkdir -p /var/log/digitalmarketplace
 
-COPY --from=uwsgi /usr/local/bin/uwsgi /usr/local/bin/uwsgi
+COPY awslogs/awslogs.conf /etc/awslogs.conf
+COPY awslogs/run.sh /awslogs.sh
+
+ENV DEP_SUPERVISOR_VERSION 4.1.0
+
+RUN pip install --no-cache-dir \
+        supervisor==${DEP_SUPERVISOR_VERSION} \
+    && chmod 777 /run
 
 COPY supervisord.conf /etc/supervisord.conf
-COPY nginx/nginx.conf /etc/nginx/nginx.conf
-COPY uwsgi.conf /etc/uwsgi.conf
-COPY awslogs/awslogs.conf /etc/awslogs.conf
 
-COPY nginx/run.sh /nginx.sh
-COPY awslogs/run.sh /awslogs.sh
+ENV DEP_UWSGI_VERSION 2.0.18
+
+COPY --from=uwsgi /usr/local/bin/uwsgi /usr/local/bin/uwsgi
+COPY uwsgi.conf /etc/uwsgi.conf
 
 CMD ["/usr/local/bin/supervisord", "--configuration", "/etc/supervisord.conf"]
 
