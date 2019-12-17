@@ -12,7 +12,7 @@ ENV DEP_UWSGI_VERSION 2.0.18
 ENV DEP_AWSCLI_CWLOGS_VERSION 1.4.6
 
 RUN /usr/bin/apt-get update && \
-    /usr/bin/apt-get install -y --no-install-recommends nginx git && \
+    /usr/bin/apt-get install -y --no-install-recommends nginx && \
     /bin/rm -rf /var/lib/apt/lists/* && \
     /usr/local/bin/pip3 install --no-cache-dir supervisor==${DEP_SUPERVISOR_VERSION} \
         awscli-cwlogs==${DEP_AWSCLI_CWLOGS_VERSION} && \
