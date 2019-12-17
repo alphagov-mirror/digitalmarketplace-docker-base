@@ -8,30 +8,24 @@ build:
 	docker pull digitalmarketplace/base
 	docker build --pull --cache-from digitalmarketplace/base ${BUILD_ARGS} -t digitalmarketplace/base -f base.docker .
 	docker tag digitalmarketplace/base digitalmarketplace/base:${BUILD_VERSION}
-	docker tag digitalmarketplace/base digitalmarketplace/base:${BUILD_VERSION}-${BUILD_DATE}
 
 	docker build -t digitalmarketplace/base-api -f api.docker .
 	docker tag digitalmarketplace/base-api digitalmarketplace/base-api:${BUILD_VERSION}
-	docker tag digitalmarketplace/base-api digitalmarketplace/base-api:${BUILD_VERSION}-${BUILD_DATE}
 
 	docker build -t digitalmarketplace/base-frontend -f frontend.docker .
 	docker tag digitalmarketplace/base-frontend digitalmarketplace/base-frontend:${BUILD_VERSION}
-	docker tag digitalmarketplace/base-frontend digitalmarketplace/base-frontend:${BUILD_VERSION}-${BUILD_DATE}
 
 .PHONY: push
 push:
 	$(eval BUILD_DATE := $(shell docker inspect --format '{{.Config.Labels.BUILD_DATE}}' digitalmarketplace/base))
 
 	docker push digitalmarketplace/base:${BUILD_VERSION}
-	docker push digitalmarketplace/base:${BUILD_VERSION}-${BUILD_DATE}
 	if [ -z $$NOT_LATEST ]; then docker push digitalmarketplace/base:latest; fi
 
 	docker push digitalmarketplace/base-api:${BUILD_VERSION}
-	docker push digitalmarketplace/base-api:${BUILD_VERSION}-${BUILD_DATE}
 	if [ -z $$NOT_LATEST ]; then docker push digitalmarketplace/base-api:latest; fi
 
 	docker push digitalmarketplace/base-frontend:${BUILD_VERSION}
-	docker push digitalmarketplace/base-frontend:${BUILD_VERSION}-${BUILD_DATE}
 	if [ -z $$NOT_LATEST ]; then docker push digitalmarketplace/base-frontend:latest; fi
 
 .PHONY: scan
