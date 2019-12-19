@@ -2,11 +2,5 @@ FROM digitalmarketplace/base
 
 COPY nginx/api /etc/nginx/sites-enabled/api
 
-ONBUILD RUN /usr/local/bin/python3 -m venv venv
-ONBUILD COPY requirements.txt ${APP_DIR}
-ONBUILD RUN /app/venv/bin/pip3 install --no-cache-dir -r requirements.txt
-
-ONBUILD COPY . ${APP_DIR}
-
 ONBUILD ARG release_name
 ONBUILD RUN echo ${release_name} > ${APP_DIR}/version_label
