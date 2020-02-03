@@ -2,6 +2,12 @@
 
 Records breaking changes from major version bumps
 
+## 9.0.0
+
+Remove `nodejs` from `-api` image, adding it only in the `-frontend` image. Also bump it to 10.18.1.
+
+PR: [#68](https://github.com/alphagov/digitalmarketplace-docker-base/pull/68)
+
 ## 8.0.0
 
 Upgrade supervisor from v3 to v4 to remove redundant Python2 install. Python2 is no longer installed in these images.
