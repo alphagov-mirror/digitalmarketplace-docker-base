@@ -1,5 +1,12 @@
 FROM digitalmarketplace/base
 
+ENV DEP_NODE_VERSION 10.18.1
+
+RUN /usr/bin/curl -SLO "https://nodejs.org/dist/v${DEP_NODE_VERSION}/node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
+    test $(sha256sum node-v${DEP_NODE_VERSION}-linux-x64.tar.xz | cut -d " " -f 1) = 8cc40f45c2c62529b15e83a6bbe0ac1febf57af3c5720df68067c96c0fddbbdf && \
+    /bin/tar -xJf "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
+    /bin/rm "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz"
+
 COPY nginx/frontend /etc/nginx/sites-enabled/frontend
 
 ONBUILD RUN /usr/local/bin/python3 -m venv venv
