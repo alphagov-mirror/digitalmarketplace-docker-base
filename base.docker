@@ -19,7 +19,9 @@ RUN /usr/bin/apt-get update && \
     /bin/mkdir -p ${APP_DIR} && \
     /bin/rm -f /etc/nginx/sites-enabled/* && \
     /bin/mkdir -p /var/log/digitalmarketplace && \
-    /bin/chmod 777 /run
+    /bin/chmod 777 /run && \
+    /usr/sbin/groupadd -r nginx && /usr/sbin/useradd --no-log-init -r -g nginx -G www-data nginx && \
+    /usr/sbin/groupadd -r uwsgi && /usr/sbin/useradd --no-log-init -r -g uwsgi -G www-data uwsgi
 
 COPY supervisord.conf /etc/supervisord.conf
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
