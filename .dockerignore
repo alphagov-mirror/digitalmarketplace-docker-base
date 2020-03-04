@@ -3,3 +3,4 @@
 !awslogs/
 !nginx/
 !*.conf
+!mime.types
