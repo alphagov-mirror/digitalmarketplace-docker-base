@@ -34,3 +34,12 @@ Sometimes it's useful to know what's happening inside a container built from an 
 To start a container from an image and get a bash prompt:
 
     $ docker run -it <image_name>:<image_tag> bash
+
+## Upgrading Node
+
+If you are upgrading the Node version on the `frontend.docker` image, include the hash of the tarball. You
+can generate this by downloading the tarball locally from https://nodejs.org/en/blog/release/ and running:
+
+    $ sha256sum node-<VERSION>-linux-x64.tar.xz | cut -d " " -f 1
+
+Note that this is not a guarantee of a secure download, but it does ensure we're getting a more reproducible image.
