@@ -43,3 +43,15 @@ can generate this by downloading the tarball locally from https://nodejs.org/en/
     $ sha256sum node-<VERSION>-linux-x64.tar.xz | cut -d " " -f 1
 
 Note that this is not a guarantee of a secure download, but it does ensure we're getting a more reproducible image.
+
+## Licence
+
+Unless stated otherwise, the codebase is released under [the MIT License][mit].
+This covers both the codebase and any sample code in the documentation.
+
+The documentation is [&copy; Crown copyright][copyright] and available under the terms
+of the [Open Government 3.0][ogl] licence.
+
+[mit]: LICENCE
+[copyright]: http://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/
+[ogl]: http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/
