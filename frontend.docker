@@ -3,7 +3,7 @@ FROM digitalmarketplace/base
 ENV DEP_NODE_VERSION 10.23.0
 
 RUN /usr/bin/curl -SLO "https://nodejs.org/dist/v${DEP_NODE_VERSION}/node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" && \
-    test $(sha256sum node-v${DEP_NODE_VERSION}-linux-x64.tar.xz | cut -d " " -f 1) = ddf33e038c593d6df36b1dd4b25c1b6fa8230c615e6312ad33e80ef863e4a74f && \
+    test $(sha256sum node-v${DEP_NODE_VERSION}-linux-x64.tar.xz | cut -d " " -f 1) = 3293b1ea9b9e08d9dbc5bb8717a80084e24cadfe3b030a8ebfdadea5f963dfc9 && \
     /bin/tar -xJf "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz" -C /usr/local --strip-components=1 && \
     /bin/rm "node-v${DEP_NODE_VERSION}-linux-x64.tar.xz"
 
