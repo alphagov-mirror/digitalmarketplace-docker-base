@@ -31,6 +31,8 @@ COPY awslogs/awslogs.conf /etc/awslogs.conf
 
 COPY nginx/run.sh /nginx.sh
 COPY awslogs/run.sh /awslogs.sh
+COPY supervisor_stdout.py /usr/local/lib/python3.6/site-packages
+COPY supervisor_stdout.py /usr/local/bin/supervisor_stdout
 
 LABEL BUILD_DATE=${BUILD_DATE}
 LABEL BUILD_VERSION=${BUILD_VERSION}

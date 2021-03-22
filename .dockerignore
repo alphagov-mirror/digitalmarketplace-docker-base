@@ -4,3 +4,4 @@
 !nginx/
 !*.conf
 !mime.types
+!supervisor_stdout.py
