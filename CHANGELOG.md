@@ -2,6 +2,10 @@
 
 Records breaking changes from major version bumps
 
+## Unreleased
+
+Upgrade to Python 3.7.
+
 ## 9.0.0
 
 Remove `nodejs` from `-api` image, adding it only in the `-frontend` image. Also bump it to 10.18.1.

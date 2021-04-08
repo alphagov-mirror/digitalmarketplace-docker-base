@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.6
+#!/usr/local/bin/python3.7
 
 """A simple supervisord event listener to relay process output to supervisor's stdout
 

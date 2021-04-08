@@ -1,4 +1,4 @@
-FROM python:3.6-slim-buster
+FROM python:3.7-slim-buster
 
 ARG BUILD_DATE
 ARG BUILD_VERSION
@@ -31,7 +31,7 @@ COPY awslogs/awslogs.conf /etc/awslogs.conf
 
 COPY nginx/run.sh /nginx.sh
 COPY awslogs/run.sh /awslogs.sh
-COPY supervisor_stdout.py /usr/local/lib/python3.6/site-packages
+COPY supervisor_stdout.py /usr/local/lib/python3.7/site-packages
 COPY supervisor_stdout.py /usr/local/bin/supervisor_stdout
 
 LABEL BUILD_DATE=${BUILD_DATE}
